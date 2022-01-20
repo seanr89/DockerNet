@@ -2,6 +2,7 @@
 // Console.WriteLine("Hello, World!");
 
 
+using DocNetPostgre;
 using DocNetPostgre.Context;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
@@ -23,6 +24,8 @@ builder.Services.AddDbContext<ApplicationContext>(options =>
 
 builder.Services.AddHealthChecks();
 
+//... rest of the code omitted for brevity
+builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 var app = builder.Build();
 
@@ -30,11 +33,14 @@ var app = builder.Build();
 //builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+// if (app.Environment.IsDevelopment())
+// {
+//     app.UseSwagger();
+//     app.UseSwaggerUI();
+// }
+
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 
@@ -44,5 +50,7 @@ app.MapHealthChecks("/healthcheck");
 app.MapControllers();
 
 app.MapGet("/", () => "Hello World!");
+
+MigrationExtensions.RunDBMigration(builder.Services);
 
 app.Run();
