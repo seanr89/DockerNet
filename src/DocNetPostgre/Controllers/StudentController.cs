@@ -19,7 +19,7 @@ public class StudentsController : ControllerBase
     [HttpGet]
     public IActionResult Get()
     {
-        return Ok();
+        return Ok(_context.Students.ToList());
     }
 
     [HttpGet("{id}", Name = "GetById")]

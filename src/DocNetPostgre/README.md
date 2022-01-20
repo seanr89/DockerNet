@@ -19,4 +19,7 @@ or:
 
 
 ### 3. check that the container is running
-$ docker ps
+run `docker ps`
+
+### 4. Spin down container
+
