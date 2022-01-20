@@ -1,31 +1,48 @@
 ﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+// Console.WriteLine("Hello, World!");
 
 
-// var builder = WebApplication.CreateBuilder(args);
+using DocNetPostgre.Context;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
-// // Add services to the container.
+var builder = WebApplication.CreateBuilder(args);
 
-// builder.Services.AddControllers();
-// // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-// builder.Services.AddEndpointsApiExplorer();
-// builder.Services.AddSwaggerGen();
+ // Add services to the container.
+builder.Services.AddControllers();
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
-// var app = builder.Build();
+// Connect to PostgreSQL Database
+var connectionString = builder.Configuration["PostgreSQL:ConnectionString"];
+builder.Services.AddDbContext<ApplicationContext>(options =>
+    options.UseNpgsql(connectionString));
 
-// // Configure the HTTP request pipeline.
-// if (app.Environment.IsDevelopment())
-// {
-//     app.UseSwagger();
-//     app.UseSwaggerUI();
-// }
+builder.Services.AddHealthChecks();
 
-// app.UseHttpsRedirection();
 
-// // app.UseAuthorization();
+var app = builder.Build();
 
-// app.MapControllers();
+//... rest of the code omitted for brevity
+//builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-// app.MapGet("/", () => "Hello World!");
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
-// app.Run();
+app.UseHttpsRedirection();
+
+// app.UseAuthorization();
+app.MapHealthChecks("/healthcheck");
+
+app.MapControllers();
+
+app.MapGet("/", () => "Hello World!");
+
+app.Run();
