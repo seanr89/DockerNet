@@ -23,6 +23,7 @@ builder.Services.AddDbContext<ApplicationContext>(options =>
     options.UseNpgsql(connectionString));
 
 builder.Services.AddHealthChecks();
+builder.Services.AddHealthChecksUI().AddPostgreSqlStorage(connectionString);
 
 //... rest of the code omitted for brevity
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
@@ -30,22 +31,24 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 var app = builder.Build();
 
 //... rest of the code omitted for brevity
-//builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 // Configure the HTTP request pipeline.
-// if (app.Environment.IsDevelopment())
-// {
-//     app.UseSwagger();
-//     app.UseSwaggerUI();
-// }
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
-app.UseSwagger();
-app.UseSwaggerUI();
+// app.UseSwagger();
+// app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 
 // app.UseAuthorization();
 app.MapHealthChecks("/healthcheck");
+app.MapHealthChecksUI(config => config.UIPath = "/hc-ui");
+
 
 app.MapControllers();
 
