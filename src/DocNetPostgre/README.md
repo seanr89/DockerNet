@@ -9,7 +9,7 @@ First run cmd `docker pull postgres`
 ### 2. run the postgres image
  `docker run -d --name dev-postgres -e POSTGRES_PASSWORD=Pass2020! -v ${HOME}/postgres-data/:/var/lib/postgresql/data -p 5432:5432 postgres`
 or:
-`docker run --name basic-postgres --rm -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=4y7sV96vA9wv46VR -e PGDATA=/var/lib/postgresql/data/pgdata -v /tmp:/var/lib/postgresql/data -p 5432:5432 -it postgres`
+`docker run --name basic-postgres --rm -e POSTGRES_USER=postgres_user -e POSTGRES_PASSWORD=4y7sV96vA9wv46VR -e PGDATA=/var/lib/postgresql/data/pgdata -v /tmp:/var/lib/postgresql/data -p 5432:5432 -it postgres`
 
 1. First, the name basic-posgres is given to the running container, and --rm will clean up the container and remove the file system when the container exits. Some environment variables have been added to make things easier.
 
