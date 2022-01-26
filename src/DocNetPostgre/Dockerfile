@@ -8,10 +8,10 @@ RUN dotnet restore
 
 # Copy everything else and build
 COPY . .
-RUN dotnet publish -c Release -o out
+RUN dotnet publish -c Release -o out /publish
 
 # Build runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:6.0
 WORKDIR /app
-COPY --from=build-env /app/out .
+COPY --from=build /publish .
 ENTRYPOINT ["dotnet", "DocNetPostgre.dll"]

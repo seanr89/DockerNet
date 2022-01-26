@@ -23,3 +23,5 @@ run `docker ps`
 
 ### 4. Spin down container
 
+
+## Docker Build and Push Steps

@@ -22,8 +22,8 @@ var connectionString = builder.Configuration["PostgreSQL:ConnectionString"];
 builder.Services.AddDbContext<ApplicationContext>(options =>
     options.UseNpgsql(connectionString));
 
-builder.Services.AddHealthChecks();
-builder.Services.AddHealthChecksUI().AddPostgreSqlStorage(connectionString);
+//builder.Services.AddHealthChecks();
+//builder.Services.AddHealthChecksUI();//.AddPostgreSqlStorage(connectionString);
 
 //... rest of the code omitted for brevity
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
@@ -46,8 +46,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 // app.UseAuthorization();
-app.MapHealthChecks("/healthcheck");
-app.MapHealthChecksUI(config => config.UIPath = "/hc-ui");
+//app.MapHealthChecks("/healthcheck");
+//app.MapHealthChecksUI(config => config.UIPath = "/hc-ui");
 
 
 app.MapControllers();
