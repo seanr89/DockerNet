@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-var builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(args);//.AddEnvironmentVariables();
 
  // Add services to the container.
 builder.Services.AddControllers();
@@ -19,19 +19,17 @@ builder.Services.AddSwaggerGen();
 
 // Connect to PostgreSQL Database
 var connectionString = builder.Configuration["PostgreSQL:ConnectionString"];
+Console.WriteLine(connectionString);
 builder.Services.AddDbContext<ApplicationContext>(options =>
     options.UseNpgsql(connectionString));
 
-//builder.Services.AddHealthChecks();
-//builder.Services.AddHealthChecksUI();//.AddPostgreSqlStorage(connectionString);
+builder.Services.AddHealthChecks().AddNpgSql(connectionString);
+builder.Services.AddHealthChecksUI().AddInMemoryStorage();
 
 //... rest of the code omitted for brevity
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 var app = builder.Build();
-
-//... rest of the code omitted for brevity
-builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -46,8 +44,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 // app.UseAuthorization();
-//app.MapHealthChecks("/healthcheck");
-//app.MapHealthChecksUI(config => config.UIPath = "/hc-ui");
+app.MapHealthChecks("/healthcheck");
+app.MapHealthChecksUI(config => config.UIPath = "/hc-ui");
 
 
 app.MapControllers();
