@@ -43,13 +43,18 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 // app.UseAuthorization();
-app.MapHealthChecks("/healthcheck");
-app.UseHealthChecks("/hc", new HealthCheckOptions()
+app.MapHealthChecks("/healthcheck", new HealthCheckOptions()
 {
     Predicate = _ => true,
     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
 });
+// app.UseHealthChecks("/hc", new HealthCheckOptions()
+// {
+//     Predicate = _ => true,
+//     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+// });
 app.MapHealthChecksUI(config => config.UIPath = "/hc-ui");
+
 
 
 app.MapControllers();
