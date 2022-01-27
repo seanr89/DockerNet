@@ -4,7 +4,9 @@
 
 using DocNetPostgre;
 using DocNetPostgre.Context;
+using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -38,20 +40,22 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-// app.UseSwagger();
-// app.UseSwaggerUI();
-
 app.UseHttpsRedirection();
 
 // app.UseAuthorization();
 app.MapHealthChecks("/healthcheck");
+app.UseHealthChecks("/hc", new HealthCheckOptions()
+{
+    Predicate = _ => true,
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+});
 app.MapHealthChecksUI(config => config.UIPath = "/hc-ui");
 
 
 app.MapControllers();
 
-app.MapGet("/", () => "Hello World!");
+// app.MapGet("/", () => "Hello World!");
 
-MigrationExtensions.RunDBMigration(builder.Services);
+//MigrationExtensions.RunDBMigration(builder.Services);
 
 app.Run();
