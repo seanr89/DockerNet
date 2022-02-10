@@ -12,4 +12,7 @@ public class ApplicationContext : DbContext
 		}
 
 		public DbSet<Student> Students { get; set; }
+		public DbSet<Employee> Employees { get; set; }
+		public DbSet<TodoItem> TodoItems { get; set; }
+		
 }
