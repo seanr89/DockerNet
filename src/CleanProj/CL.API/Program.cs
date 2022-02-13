@@ -23,3 +23,15 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+IConfiguration GetConfiguration()
+{
+    var builder = new ConfigurationBuilder()
+        .SetBasePath(Directory.GetCurrentDirectory())
+        .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+        .AddEnvironmentVariables();
+
+    var config = builder.Build();
+
+    return builder.Build();
+}
