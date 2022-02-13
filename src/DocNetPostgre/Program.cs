@@ -48,11 +48,6 @@ app.MapHealthChecks("/healthcheck", new HealthCheckOptions()
     Predicate = _ => true,
     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
 });
-// app.UseHealthChecks("/hc", new HealthCheckOptions()
-// {
-//     Predicate = _ => true,
-//     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-// });
 app.MapHealthChecksUI(config => config.UIPath = "/hc-ui");
 
 
