@@ -18,6 +18,26 @@ class Program
         RegisterAndInjectServices(serviceCollection, Configuration);
         //Initialise netcore dependency injection provider
         var serviceProvider = serviceCollection.BuildServiceProvider();
+
+        try
+            {
+                using (ExecutionPerformanceMonitor monitor = new ExecutionPerformanceMonitor())
+                {
+                    //Asynchronous method executed with Wait added to ensure that console request is not output too early
+                    //serviceProvider.GetService<StatsHandler>().Execute(days, detailed).Wait();
+                    Console.WriteLine($"{monitor.CreatePerformanceTimeMessage("FileBench Overall")}");
+                }
+            }
+            catch (NotImplementedException e)
+            {
+                Console.WriteLine($"Implementation Exception caught: {e.Message}");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Generic Exception caught: {e.Message}");
+            }
+
+            Console.WriteLine("App Completed");
     }
 
     /// <summary>
