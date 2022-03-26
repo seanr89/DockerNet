@@ -5,9 +5,12 @@ namespace appbencher;
 
 public class CSVFileIngest
 {
-    public void readFile()
+    /// <summary>
+    /// App to use the nuget based csvReader
+    /// </summary>
+    public void CSVReadFile()
     {
-        using (var reader = new StreamReader("path\\to\\file.csv"))
+        using (var reader = new StreamReader("path\\to\\datafile.csv"))
         using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
         {
             var records = csv.GetRecords<CSVRecord>();

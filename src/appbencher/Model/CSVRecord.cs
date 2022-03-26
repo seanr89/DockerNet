@@ -1,6 +1,6 @@
 namespace appbencher.Model;
 
-public class CSVRecord
+public record CSVRecord
 {
     public int Id { get; set; }
     public double Value { get; set; }
