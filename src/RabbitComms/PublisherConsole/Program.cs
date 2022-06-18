@@ -20,15 +20,18 @@ public class Program
         var max = args.Length != 0 ? Convert.ToInt32(args[0]) : -1;
         while (max == -1 || counter < max)
         {
-            Console.WriteLine($"Counter: {++counter}");
-            messagePub.SendMessage(new Order(){
+            //Console.WriteLine($"Counter: {++counter}");
+            Order order = new()
+                {
                 Id = counter,
                 ProductName = "hello",
-                Price = new Random().Next(10, 50)
-            });
-            await Task.Delay(1500);
+                Price = new Random().Next(10, 50),
+                Date = DateTime.Now
+            };
+            messagePub.SendMessage(order);
+            await Task.Delay(5000);
         }
-        
-        Console.ReadKey();
+        Console.WriteLine("Process Complete");
+        Console.ReadLine();
     }
 }

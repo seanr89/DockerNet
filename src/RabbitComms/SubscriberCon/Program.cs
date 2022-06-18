@@ -12,25 +12,25 @@ public class Program
         // See https://aka.ms/new-console-template for more information
         Console.WriteLine("Starting Subscriber App");
 
-        // TODO: Begin listening!!
-        try{
-            var factory = new ConnectionFactory { HostName = "localhost" }; 
-            var connection = factory.CreateConnection(); 
-            using var channel = connection.CreateModel();
-            channel.QueueDeclare("orders");
+        var factory = new ConnectionFactory { HostName = "localhost" }; 
+        var connection = factory.CreateConnection();
+        using var channel = connection.CreateModel();
+        channel.QueueDeclare("orders", exclusive: false);
 
-            var consumer = new EventingBasicConsumer(channel);
-            consumer.Received += (model, eventArgs) =>
-            {
-                var body = eventArgs.Body.ToArray();
-                var message = Encoding.UTF8.GetString(body);
+        var consumer = new EventingBasicConsumer(channel);
+        consumer.Received += (model, eventArgs) =>
+        {
+            var body = eventArgs.Body.ToArray();
+            var message = Encoding.UTF8.GetString(body);
 
-                Console.WriteLine(message);
-            };
-        }
-        catch(Exception e){
-            Console.WriteLine($"caught exception: {e.Message}");
-        }
+            Console.WriteLine(message);
+        };
+
+        //Start consumer
+        Console.WriteLine("Starting Consumer");
+        channel.BasicConsume(queue: "orders", autoAck: true, consumer: consumer);
+
+        Console.WriteLine("Subscribe Process Complete - Awaiting KeyPress");
         Console.ReadKey();
     }
 }

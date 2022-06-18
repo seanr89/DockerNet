@@ -8,6 +8,7 @@ public class RabbitMQProducer : IMessageProducer
 {
     public void SendMessage<T>(T message)
     {
+        Console.WriteLine("SendMessage");
         var factory = new ConnectionFactory
         {
             HostName = "localhost"
