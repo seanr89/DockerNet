@@ -1,4 +1,4 @@
-name: Dotnet Build CI
+name: Dotnet Build and Docker Deploy
 
 on:
   push:
