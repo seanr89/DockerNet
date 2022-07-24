@@ -2,6 +2,13 @@ name: Reusable Docker Workflow
 
 on:
   workflow_call:
+    inputs:
+      username:
+          required: true
+          type: string
+      token:
+          required: true
+          type: string
 
 env:
     DOTNET_VERSION: '6.0.x' # set this to the dot net version to use
