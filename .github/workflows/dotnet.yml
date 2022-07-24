@@ -1,6 +1,6 @@
 name: Dotnet Build CI
 
-# on:
+on:
 #   push:
 #     branches: [ main ]
 #     paths:
