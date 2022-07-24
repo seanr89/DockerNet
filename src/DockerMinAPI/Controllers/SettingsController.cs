@@ -1,25 +1,36 @@
 using Microsoft.AspNetCore.Mvc;
 using DockerMinAPI.Models;
+using Microsoft.Extensions.Options;
 
 namespace DockerMinAPI.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("[controller]/[action]")]
 public class SettingsController : ControllerBase
 {
     private readonly ILogger<SettingsController> _logger;
     private readonly BasicSettings _basicSettings;
+    private readonly string _connectionString;
 
     public SettingsController(ILogger<SettingsController> logger,
-        IOptions<BasicSettings> basicSettings)
+        IOptions<BasicSettings> basicSettings,
+        IConfiguration config)
     {
         _logger = logger;
         _basicSettings = basicSettings.Value;
+        _connectionString = config["ConnectionString"];
     }
 
     [HttpGet]
     public IActionResult Get(){
-        return Ok();
+        return Ok(_basicSettings);
+    }
+
+    [HttpGet(Name = "GetConnectionSetting")]
+    public IActionResult GetConnectionSetting()
+    {
+        _logger.LogInformation("GetConnectionSetting");
+        return Ok(_connectionString);
     }
 
     // [HttpGet(Name = "GetWeatherForecast")]
