@@ -3,9 +3,9 @@ name: Dotnet Build and Docker Deploy
 on:
   push:
     branches: [ main ]
-    paths:
-      - './src/DockerMinAPI/*'
-    workflow_dispatch:
+    # paths:
+    #   - './src/DockerMinAPI/*'
+  workflow_dispatch:
 
 jobs:
   local-dotnet-build:
