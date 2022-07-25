@@ -3,6 +3,7 @@
 build: `docker build -t dockerminapi .`
 
 run: `docker run dockerminapi`
+or `docker run -d -p 8080:80 --name myapp dockerminapi`
 
 ## Env Settings and Parameters
 example: `docker run -e CustomSetting="{yourClientId}" dockerminapi`

@@ -5,6 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 IConfiguration configuration = new ConfigurationBuilder()
                             .AddJsonFile("appsettings.json")
+                            .AddEnvironmentVariables() // Duplicate == Environment
                             .Build();
 
 builder.Services.Configure<BasicSettings>(
@@ -30,6 +31,6 @@ app.UseHttpsRedirection();
 
 app.MapControllers();
 
-//app.MapGet("/", () => "Hello World!");
+app.MapGet("/", () => "Hello World!");
 
 app.Run();
