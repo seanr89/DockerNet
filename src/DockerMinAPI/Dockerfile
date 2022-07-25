@@ -4,10 +4,6 @@ WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
-# ENV EmailServer=127.0.01
-ENV ASPNETCORE_ENVIRONMENT=Development
-ENV BasicSettings__MyValue=HiDocker
-ENV ConnectionString=DockerConnectionSetting
 
 # Step 2: Copy project file to the ./ container folder
 COPY *.csproj ./
@@ -21,6 +17,10 @@ COPY . .
 RUN dotnet publish -c Release -o out
 
 # Step 7: Expose port 80 in the container - Moved
+# ENV EmailServer=127.0.01
+#ENV ASPNETCORE_ENVIRONMENT=Development
+#ENV BasicSettings__MyValue=HiDocker
+#ENV ConnectionString=DockerConnectionSetting
 
 # Build runtime image
 # Step 8: Move the /app folder and run the compiled app

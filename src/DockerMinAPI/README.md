@@ -7,7 +7,7 @@ or `docker run -d -p 8080:80 --name myapp dockerminapi`
 
 ## Env Settings and Parameters
 example: `docker run -e CustomSetting="{yourClientId}" dockerminapi`
-run: `docker run -e CustomSetting="mysupersettings" dockerminapi`
+run: `docker run -d -p 8080:80 -e BasicSettings__MyValue=HiDocker --name myapp dockerminapi`
 
 ## Useful links
 1. (link)[https://medium.com/@agustinafassina_92108/docker-net-core-and-environment-variables-b2a5e4a4c062]
