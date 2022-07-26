@@ -1,5 +1,5 @@
 # Step 1: Specify your base image
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build-env
+FROM mcr.microsoft.com/dotnet/sdk:6.0-alpine AS build-env
 WORKDIR /app
 EXPOSE 80
 EXPOSE 443
@@ -14,7 +14,7 @@ RUN dotnet restore
 COPY . .
 # Step 5: Build the app in Release mode
 # Step 6: Publish the application
-RUN dotnet publish -c Release -o out
+RUN dotnet publish -c Release -r linux-musl-x64 --self-contained true /p:PublishTrimmed=true -o out
 
 # Step 7: Expose port 80 in the container - Moved
 # ENV EmailServer=127.0.01
@@ -24,7 +24,7 @@ RUN dotnet publish -c Release -o out
 
 # Build runtime image
 # Step 8: Move the /app folder and run the compiled app
-FROM mcr.microsoft.com/dotnet/aspnet:6.0
+FROM mcr.microsoft.com/dotnet/aspnet:6.0-alpine-amd64
 WORKDIR /app
 COPY --from=build-env /app/out .
 ENTRYPOINT ["dotnet", "DockerMinAPI.dll"]
