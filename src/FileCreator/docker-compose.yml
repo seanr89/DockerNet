@@ -10,10 +10,9 @@ services:
         ##build:
             # context: .
             #dockerfile: ./Dockerfile
+        command: ["more", "arguments"]
         working_dir: /app
         volumes:
             - ../../files:/app/details
-        # networks:
-        #     - console-dev
-# volumes:
-#     files:
+        # environment:
+        #     - name=value

@@ -4,7 +4,12 @@ public class Program
     static void Main(string[] args)
     {
         // See https://aka.ms/new-console-template for more information
-        Console.WriteLine("Hello, World!");
+        Console.WriteLine("Hello, File Creator!");
+
+        string envArg = args[0] ?? "Empty";
+        Console.WriteLine(envArg);
+        if(args.Any())
+            Console.WriteLine($"Args count: {args.Length}");
 
         string path = Directory.GetCurrentDirectory();
         //string target = @"c:\temp";
